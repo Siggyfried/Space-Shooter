@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser_Left
       objectReference: {fileID: 0}
+    - target: {fileID: 7406303003302201603, guid: 0c661077a118e704cbe509e4ba342e28, type: 3}
+      propertyPath: m_TagString
+      value: Laser
+      objectReference: {fileID: 0}
     - target: {fileID: 8886149368931019965, guid: 0c661077a118e704cbe509e4ba342e28, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.18
