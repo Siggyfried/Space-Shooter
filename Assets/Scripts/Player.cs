@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private int _shieldLives = 0;
+    private int _maxShield = 3;
     private SpawnManager _spawnManager;
 
 
@@ -28,6 +31,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _shieldVisualizer;
+    [SerializeField]
+    private GameObject _shieldVisualizerMed;
+    [SerializeField]
+    private GameObject _shieldVisualizerHigh;
     [SerializeField]
     private GameObject _rightEngine;
     [SerializeField]
@@ -180,8 +187,25 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldLives--;
+            
+
+            if (_shieldLives == 2)
+            {
+                _shieldVisualizerHigh.SetActive(false);
+            }
+
+            else if (_shieldLives == 1)
+            {
+                _shieldVisualizerMed.SetActive(false);       
+            }
+
+            if (_shieldLives < 1)
+            {
+                _shieldVisualizer.SetActive(false);
+                _isShieldActive = false;
+            }
+           
             return;
         }
         
@@ -232,10 +256,13 @@ public class Player : MonoBehaviour
     }
 
     public void ShieldActive()
-    {
-        _isShieldActive = true;
-        _shieldVisualizer.SetActive(true);
+    {   
         
+            _shieldLives = _maxShield;
+            _isShieldActive = true;
+            _shieldVisualizer.SetActive(true);
+            _shieldVisualizerMed.SetActive(true);
+            _shieldVisualizerHigh.SetActive(true);
     }
 
     public void AddScore(int points)
