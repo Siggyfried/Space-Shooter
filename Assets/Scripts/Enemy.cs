@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private AudioSource _audioSource;
 
+    private bool _isDead;
     void Start()
     {
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
@@ -43,17 +45,9 @@ public class Enemy : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Time.time > _canFire)
+        if (!_isDead)
         {
-            _fireRate = Random.Range(3f, 7f);
-            _canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-            }
+            Shoot();
         }
     }
 
@@ -68,6 +62,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void Shoot()
+    {
+        if (Time.time > _canFire)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
         {
@@ -80,8 +89,10 @@ public class Enemy : MonoBehaviour
                 }
                 _anim.SetTrigger("OnEnemyDeath");
                 _speed = 0;
+                _isDead = true;
                 _audioSource.Play();
                 Destroy(this.gameObject, 2.8f);
+                Destroy(GetComponent<Collider2D>());
             }
             
             if (other.CompareTag("Laser"))
@@ -93,6 +104,7 @@ public class Enemy : MonoBehaviour
             }
                 _anim.SetTrigger("OnEnemyDeath");
                 _speed = 0;
+                _isDead = true;
                 _audioSource.Play();
                 Destroy(GetComponent<Collider2D>());
                 Destroy(this.gameObject, 2.8f);            
