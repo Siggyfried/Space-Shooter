@@ -86,6 +86,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CheckAmmo();
+        
 
         if (_isPlayerOne == true)
         {
@@ -218,23 +219,9 @@ public class Player : MonoBehaviour
         }
         
         _lives--;
-
-        if (_lives == 2)
-        {
-            _leftEngine.SetActive(true);
-        }
-        else if (_lives == 1)
-        {
-            _rightEngine.SetActive(true);
-        }
-        
+        ShipDamage();
         _uiManager.UpdateLives(_lives);
-
-        if (_lives < 1)
-        {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
-        }
+        
     }
 
     public void TripleShotActive()
@@ -305,7 +292,31 @@ public class Player : MonoBehaviour
         {
             _lives++;
             _uiManager.UpdateLives(_lives);
+            ShipDamage();
         }
     }
 
+    public void ShipDamage()
+    {
+        if (_lives == 3)
+        {
+            _leftEngine.SetActive(false);
+            _rightEngine.SetActive(false);
+        }
+        if (_lives == 2)
+        {   
+            _leftEngine.SetActive(true);
+            _rightEngine.SetActive(false);
+        }
+        else if (_lives == 1)
+        {     
+            _rightEngine.SetActive(true);
+            _leftEngine.SetActive(true);
+        }
+        if (_lives < 1)
+        {
+            _spawnManager.OnPlayerDeath();
+            Destroy(this.gameObject);
+        }
+    }
 }
