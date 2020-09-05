@@ -188,7 +188,6 @@ public class Player : MonoBehaviour
         if (_isShieldActive == true)
         {
             _shieldLives--;
-            
 
             if (_shieldLives == 2)
             {
@@ -197,15 +196,13 @@ public class Player : MonoBehaviour
 
             else if (_shieldLives == 1)
             {
-                _shieldVisualizerMed.SetActive(false);       
+                _shieldVisualizerMed.SetActive(false);
             }
 
             if (_shieldLives < 1)
             {
                 _shieldVisualizer.SetActive(false);
-                _isShieldActive = false;
             }
-           
             return;
         }
         
@@ -256,8 +253,7 @@ public class Player : MonoBehaviour
     }
 
     public void ShieldActive()
-    {   
-        
+    {       
             _shieldLives = _maxShield;
             _isShieldActive = true;
             _shieldVisualizer.SetActive(true);

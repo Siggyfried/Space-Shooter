@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Runtime.CompilerServices;
 
 public class UIManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour
         }
 
         bestScore = PlayerPrefs.GetInt("HighScore", 0);
-        _bestText.text = "Best: " + bestScore;
+        _bestText.text = "Best: " + bestScore;         
 
 
     }
@@ -67,6 +68,31 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateShieldLives(int currentShieldLives)
+    {
+        
+        if (currentShieldLives == 3)
+        {
+            
+            Debug.Log("shield icon lives 3");
+        }
+        if (currentShieldLives == 2)
+        {
+            
+            Debug.Log("shield icon lives 2");
+        }
+        if (currentShieldLives == 1)
+        {
+            
+            Debug.Log("shield icon lives 1");
+        }
+        if (currentShieldLives == 0) 
+        {
+            
+        }
+            
     }
 
     void GameOverSequence()
