@@ -20,6 +20,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _shieldLives = 0;
     private int _maxShield = 3;
+    private int _maxAmmo = 15;
+    [SerializeField]
+    private int _curAmmo;
+
     private SpawnManager _spawnManager;
 
 
@@ -75,18 +79,21 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(0, 0, 0);
         }
 
+        _curAmmo = _maxAmmo;
     }
 
     void Update()
     {
+        CheckAmmo();
+
         if (_isPlayerOne == true)
         {
             CalculateMovement();
 
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) && _isPlayerOne == true)
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0))
             {
                 FireLaser();
-            }
+            }                  
         }
 
         if (_isPlayerTwo == true)
@@ -168,7 +175,7 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        if (Time.time > _canFire)
+        if  ((Time.time > _canFire) && (_curAmmo > 0))
         {
             _audioSource.Play();
             if (_isTripleShotActive == true)
@@ -180,7 +187,10 @@ public class Player : MonoBehaviour
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
             }
             _canFire = Time.time + _fireRate;
+            _curAmmo--;
+            CheckAmmo();
         }
+        // else if no ammo play sound
     }
 
     public void Damage()
@@ -278,7 +288,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+   public void CheckAmmo()
+    {
+        _uiManager.UpdateAmmoText(_curAmmo);
+    }
 
 
 }

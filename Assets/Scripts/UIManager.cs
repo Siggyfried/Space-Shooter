@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Text _scoreText, _bestText;
+    private Text _scoreText, _bestText, _ammoText;
     [SerializeField]
     private Image _LivesImg;
     [SerializeField]
@@ -46,9 +46,9 @@ public class UIManager : MonoBehaviour
         }
 
         bestScore = PlayerPrefs.GetInt("HighScore", 0);
-        _bestText.text = "Best: " + bestScore;         
+        _bestText.text = "Best: " + bestScore;
 
-
+        _ammoText.text = "Ammo: " + 0;
     }
 
     public void UpdateScore(int playerScore)
@@ -70,29 +70,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateShieldLives(int currentShieldLives)
+    public void UpdateAmmoText(int currentAmmo)
     {
-        
-        if (currentShieldLives == 3)
+        _ammoText.text = "Ammo: " + currentAmmo.ToString();
+        if (currentAmmo <= 0)
         {
-            
-            Debug.Log("shield icon lives 3");
+            _ammoText.color = Color.red;
         }
-        if (currentShieldLives == 2)
+        else 
         {
-            
-            Debug.Log("shield icon lives 2");
+            _ammoText.color = Color.white;
         }
-        if (currentShieldLives == 1)
-        {
-            
-            Debug.Log("shield icon lives 1");
-        }
-        if (currentShieldLives == 0) 
-        {
-            
-        }
-            
     }
 
     void GameOverSequence()
