@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    private int _maxLives = 3;
     [SerializeField]
     private int _shieldLives = 0;
     private int _maxShield = 3;
@@ -293,5 +294,18 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmoText(_curAmmo);
     }
 
+    public void AmmoPowerup()
+    {
+        _curAmmo = _maxAmmo;
+    }
+
+    public void HealthPowerup()
+    {
+        if (_lives < _maxLives)
+        {
+            _lives++;
+            _uiManager.UpdateLives(_lives);
+        }
+    }
 
 }
