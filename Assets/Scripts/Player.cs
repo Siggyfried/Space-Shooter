@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _spreadShotPrefab;
+    [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
     [SerializeField]
@@ -27,7 +29,8 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
-
+    [SerializeField]
+    private bool _isSpreadShotActive = false;
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
@@ -184,6 +187,10 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             }
+            if (_isSpreadShotActive == true)
+            {
+                Instantiate(_spreadShotPrefab, transform.position, Quaternion.identity);
+            }
             else
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
@@ -257,6 +264,18 @@ public class Player : MonoBehaviour
             _shieldVisualizer.SetActive(true);
             _shieldVisualizerMed.SetActive(true);
             _shieldVisualizerHigh.SetActive(true);
+    }
+
+    public void SpreadShotActive()
+    {
+        _isSpreadShotActive = true;
+        StartCoroutine(SpreadShotPowerDownRoutine());
+    }
+
+    IEnumerator SpreadShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isTripleShotActive = false;
     }
 
     public void AddScore(int points)
