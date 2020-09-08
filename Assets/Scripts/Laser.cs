@@ -50,6 +50,7 @@ public class Laser : MonoBehaviour
         }
     }
 
+
     public void AssignEnemyLaser()
     {
         _isEnemyLaser = true;

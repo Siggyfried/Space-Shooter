@@ -1416,6 +1416,8 @@ MonoBehaviour:
   - {fileID: 8859128149927040776, guid: 0d7a5d082f4866946a7315c85201e163, type: 3}
   - {fileID: 4057823220222056127, guid: c08235e614a72d040ba006c8e8cc990b, type: 3}
   - {fileID: 4406720632868673275, guid: 885c2aa2d49ead64486ae0630a464ed4, type: 3}
+  rarepowerups:
+  - {fileID: 400718301830836042, guid: 57e3d0b1ff55b6d438bbe982c7b8832d, type: 3}
 --- !u!4 &1201514004
 Transform:
   m_ObjectHideFlags: 0

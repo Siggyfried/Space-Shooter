@@ -48,6 +48,9 @@ public class Powerup : MonoBehaviour
                     case 4:
                         player.HealthPowerup();
                         break;
+                    case 5:
+                        player.SpreadShotActive();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

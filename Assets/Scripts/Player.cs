@@ -275,7 +275,7 @@ public class Player : MonoBehaviour
     IEnumerator SpreadShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _isTripleShotActive = false;
+        _isSpreadShotActive = false;
     }
 
     public void AddScore(int points)
