@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
 
     public int bestScore;
 
+    public Slider _thrusterBar;
+    private float _maxThruster = 100f;
+
     void Start()
     {
         _scoreText.text = "Score: " + 0;
@@ -49,6 +52,9 @@ public class UIManager : MonoBehaviour
         _bestText.text = "Best: " + bestScore;
 
         _ammoText.text = "Ammo: " + 0;
+
+        _thrusterBar.maxValue = _maxThruster;
+        _thrusterBar.value = _maxThruster;
     }
 
     public void UpdateScore(int playerScore)
@@ -113,5 +119,11 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    
+    public void UpdateThruster(float thruster)
+    {
+        _thrusterBar.value = thruster;
+    }
 
 }
+

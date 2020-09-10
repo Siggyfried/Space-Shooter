@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _spreadShotPrefab;
     [SerializeField]
+    private GameObject _thrusterFire;
+    [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
     [SerializeField]
@@ -26,16 +30,25 @@ public class Player : MonoBehaviour
     private int _maxAmmo = 15;
     [SerializeField]
     private int _curAmmo;
-
+    private float _maxThruster = 100f;
+    [SerializeField]
+    private float _thruster = 0f;
+    [SerializeField]
+    private float _thrusterRegen = 10f;
+    [SerializeField]
+    private float _thrusterUsage = 0.5f;
+    
     private SpawnManager _spawnManager;
 
     [SerializeField]
+    private bool _hasAmmo = true;
     private bool _isSpreadShotActive = false;
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     public bool _isPlayerOne = false;
     public bool _isPlayerTwo = false;
+    private bool _hasThruster = true;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
@@ -61,6 +74,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
 
+    
+    private Camera _camera;
+
+    private WaitForSeconds regenTick = new WaitForSeconds(0.1f);
+    private Coroutine regen;
+
     void Start()
     {      
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
@@ -84,6 +103,9 @@ public class Player : MonoBehaviour
         }
 
         _curAmmo = _maxAmmo;
+        _lives = _maxLives;
+        _thruster = _maxThruster;
+        
     }
 
     void Update()
@@ -109,6 +131,8 @@ public class Player : MonoBehaviour
                 FireLaser();
             }
         }
+
+        
     }
     void CalculateMovement()
     {
@@ -120,17 +144,17 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && (_hasThruster == true))
         {
-            transform.Translate(direction * (_speed += _thrusterSpeed) * Time.deltaTime);
+            _thrusterFire.SetActive(true);
+            transform.Translate(direction * _speed * _thrusterSpeed * Time.deltaTime);
+            UseThruster();       
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            transform.Translate(direction * (_speed -= _thrusterSpeed) * Time.deltaTime);
-        }
+
         else
         {
-            transform.Translate(direction * _speed * Time.deltaTime);
+            _thrusterFire.SetActive(false);
+            transform.Translate(direction * _speed * Time.deltaTime);         
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
@@ -337,5 +361,41 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    public void UseThruster()
+    {
+        if (_thruster > 0f)
+        {
+            _hasThruster = true;
+            _thruster -= _thrusterUsage * Time.deltaTime * 2;
+            _uiManager.UpdateThruster(_thruster);
+        }
+
+        else if (_thruster <= 0f)
+        {
+            _hasThruster = false;
+        }   
+
+        if (regen != null)
+        {
+            StopCoroutine(regen);
+        }
+
+           regen = StartCoroutine(ThrusterRegen());
+    }
+
+    private IEnumerator ThrusterRegen()
+    {
+        yield return new WaitForSeconds(2);
+
+        while (_thruster < _maxThruster)
+        {
+            _hasThruster = true;
+            _thruster += _maxThruster / 100;
+            _uiManager.UpdateThruster(_thruster);
+            yield return regenTick;
+        }
+        regen = null;
     }
 }

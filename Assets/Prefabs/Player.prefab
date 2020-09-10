@@ -221,7 +221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1215353575276308152
 Transform:
   m_ObjectHideFlags: 0
@@ -516,11 +516,16 @@ MonoBehaviour:
   _speed: 5
   _laserPrefab: {fileID: 7406303003302201603, guid: 0c661077a118e704cbe509e4ba342e28, type: 3}
   _tripleShotPrefab: {fileID: 1936724090535802075, guid: 9c47fcf8f6c193c4f8ce2853416f9cab, type: 3}
-  _SpreadShotPrefab: {fileID: 2200698382105230858, guid: d73f8e6b036ec924d972f25b03c6952e, type: 3}
+  _spreadShotPrefab: {fileID: 2200698382105230858, guid: d73f8e6b036ec924d972f25b03c6952e, type: 3}
+  _thrusterFire: {fileID: 1215353575276308155}
   _fireRate: 0.15
   _lives: 3
   _shieldLives: 0
   _curAmmo: 0
+  _thruster: 0
+  _thrusterRegen: 10
+  _thrusterUsage: 20
+  _hasAmmo: 1
   _isPlayerOne: 1
   _isPlayerTwo: 0
   _shieldVisualizer: {fileID: 1215353576303437377}
