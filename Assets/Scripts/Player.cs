@@ -235,6 +235,7 @@ public class Player : MonoBehaviour
         if (_isShieldActive == true)
         {
             _shieldLives--;
+            CameraShake.Shake(0.2f, 2f);
 
             if (_shieldLives == 2)
             {
@@ -249,6 +250,7 @@ public class Player : MonoBehaviour
             if (_shieldLives < 1)
             {
                 _shieldVisualizer.SetActive(false);
+                _isShieldActive = false;
             }
             return;
         }
@@ -256,7 +258,8 @@ public class Player : MonoBehaviour
         _lives--;
         ShipDamage();
         _uiManager.UpdateLives(_lives);
-        
+        CameraShake.Shake(0.2f, 2f);
+
     }
 
     public void TripleShotActive()
