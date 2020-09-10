@@ -73,6 +73,8 @@ public class Player : MonoBehaviour
     private AudioClip _laserSoundClip;
     [SerializeField]
     private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _outOfAmmo;
 
     
     private Camera _camera;
@@ -223,7 +225,9 @@ public class Player : MonoBehaviour
             _curAmmo--;
             CheckAmmo();
         }
-        // else if no ammo play sound
+
+        if (_curAmmo == 0)
+            _audioSource.PlayOneShot(_outOfAmmo);
     }
 
     public void Damage()
