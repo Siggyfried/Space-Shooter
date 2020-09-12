@@ -1535,6 +1535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrebfab: {fileID: 4334050601511589889, guid: 45c8d5db32aa84a47b43c1c1ccbc3313, type: 3}
+  _enemy2Prefab: {fileID: 5958028433322374169, guid: c0cf163f485cf4f4cbc8d1ce5f3e2ec8, type: 3}
   _enemyContainer: {fileID: 1135822619}
   powerups:
   - {fileID: 1165113175182562354, guid: 485bbe9e62dba464e8ab1d9a0a70e7b9, type: 3}

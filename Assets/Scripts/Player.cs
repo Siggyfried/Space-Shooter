@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
             transform.Translate(direction * _speed * Time.deltaTime);         
         }
 
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 2), 0);
 
         if (transform.position.x >= 11.3f)
         {
@@ -235,7 +235,7 @@ public class Player : MonoBehaviour
         if (_isShieldActive == true)
         {
             _shieldLives--;
-            CameraShake.Shake(0.2f, 2f);
+            CameraShake.Shake(0.1f, 1f);
 
             if (_shieldLives == 2)
             {
@@ -258,7 +258,7 @@ public class Player : MonoBehaviour
         _lives--;
         ShipDamage();
         _uiManager.UpdateLives(_lives);
-        CameraShake.Shake(0.2f, 2f);
+        CameraShake.Shake(0.1f, 1f);
 
     }
 

@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private AudioSource _audioSource;
 
+    public bool _isEnemy2 = false;
+
     private bool _isDead;
     void Start()
     {
@@ -40,6 +42,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator is NULL");
         }
+
     }
     void Update()
     {
@@ -60,15 +63,34 @@ public class Enemy : MonoBehaviour
             float randomX = Random.Range(-8f, 8f);
             transform.position = new Vector3(randomX, 7f, 0);
         }
+
+        if (transform.position.x <= -8f && _isEnemy2 == true)
+        {
+            float randomY = Random.Range(2f, -3.7f);
+            transform.position = new Vector3(11.3f, randomY, 0);
+        }
     }
 
     void Shoot()
     {
-        if (Time.time > _canFire)
+        if (Time.time > _canFire && _isEnemy2 == false)
         {
             _fireRate = Random.Range(3f, 7f);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+
+        if (Time.time > _canFire && _isEnemy2 == true)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, -90f));
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
             for (int i = 0; i < lasers.Length; i++)
