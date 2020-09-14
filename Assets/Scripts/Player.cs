@@ -328,7 +328,7 @@ public class Player : MonoBehaviour
 
    public void CheckAmmo()
     {
-        _uiManager.UpdateAmmoText(_curAmmo);
+        _uiManager.UpdateAmmoText(_curAmmo, _maxAmmo);
     }
 
     public void AmmoPowerup()

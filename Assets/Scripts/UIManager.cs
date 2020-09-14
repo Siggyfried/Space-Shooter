@@ -76,9 +76,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateAmmoText(int currentAmmo)
+    public void UpdateAmmoText(int currentAmmo, int maxAmmo)
     {
-        _ammoText.text = "Ammo: " + currentAmmo.ToString();
+        _ammoText.text = "Ammo: " + currentAmmo.ToString() + " / " + maxAmmo.ToString();
         if (currentAmmo <= 0)
         {
             _ammoText.color = Color.red;
